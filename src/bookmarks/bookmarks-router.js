@@ -90,6 +90,17 @@ bookmarksRouter
       .catch(next);
   })
   .patch(bodyParser, (req, res, next) => {
+    let count = 3;
+    for (const field of ['title', 'url', 'rating']) {
+      if (!req.body[field]) {
+        count --;
+        if(count === 0){
+        logger.error(`Title, url, or rating required`);
+        return res.status(400).json({
+          error: {message: `Please supply a title, url, or rating`}});
+       }
+      }
+    }
     const { title, url, rating, description } = req.body
     const bookmarkToUpdate = { title, url, rating, description }
     BookarksService.updateBookmark(

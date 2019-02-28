@@ -230,8 +230,19 @@ describe('Bookmarks Endpoints', () => {
           .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
           .expect(204);
       });
+      it('Reponds with 400 when no required fields supplied', () => {
+        const idToUpdate = 1;
+        return supertest(app)
+          .patch(`/api/bookmarks/${idToUpdate}`)
+          .set('Authorization', `Bearer ${process.env.API_TOKEN}`)
+          .send({ favorite: true })
+          .expect(400, {
+            error: {
+              message: 'Please supply a title, url, or rating'
+            }
+          })
+        })
     });
-
   });
 
   describe('POST /api/bookmarks', () => {
