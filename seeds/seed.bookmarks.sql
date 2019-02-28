@@ -1,3 +1,5 @@
+-- psql -U postgres -d bookmarks -f ./seeds/seed.bookmarks.sql
+
 INSERT INTO bookmarks (id, title, url, rating, description)
 VALUES
   (1, 'Thinkful', 'https://www.thinkful.com', '5', 'Think outside the classroom'),
